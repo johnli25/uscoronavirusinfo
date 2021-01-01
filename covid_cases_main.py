@@ -14,7 +14,6 @@ from urllib.request import urlopen
 import plotly.io as pio
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import scale
-from collections import Counter
 from datetime import date, timedelta
 
 from covid_deaths import death_map
