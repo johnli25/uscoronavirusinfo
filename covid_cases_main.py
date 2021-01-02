@@ -53,6 +53,8 @@ fig2 = px.scatter(x = covid_us_scatter.index, y = covid_us_scatter.values)
 fig2.update_layout(xaxis_title = "Date", yaxis_title = "Cases (Cumulative)", title = "Timeline of Total COVID-19 Cases In The US")
 
 #vaccination data
+last_updated_vax = str(date.today())
+
 vax = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv')
 vax = vax.loc[vax["location"] == "United States"]
 total_vax = vax["total_vaccinations"]
@@ -236,7 +238,7 @@ app.layout = html.Div(dcc.Tabs([dcc.Tab(label="Cases",
 			),
 
 			html.P(html.P(children=(html.Strong(str(total_vax_value) + " vaccinations " +
-				"(Last updated: " + last_updated + ')')),
+				"(Last updated: " + last_updated_vax + ')')),
 					style={'textAlign': 'center'}, 
 			)),
 
@@ -270,7 +272,7 @@ app.layout = html.Div(dcc.Tabs([dcc.Tab(label="Cases",
 			'''),
 			html.Br(),
 			dcc.Markdown('''
-			_If you have any burning questions to ask, great ideas you'd like to add, or pesky bugs/typos to report, feel free to email me at <johnwl2@illinois.edu> or <parink2@illinois.edu>._
+			_**If you have any questions to ask, ideas you'd like to add, bugs/typos to report, please email me at <johnwl2@illinois.edu> or <parink2@illinois.edu>!**_
 				'''),
 			html.Br(),
 			dcc.Markdown('''_Connect me with via [LinkedIn](https://www.linkedin.com/in/johnli2023/)!_''')
