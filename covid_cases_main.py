@@ -322,7 +322,7 @@ def update_output1(date_value):
 	if date_value is not None:
 		date_object = date.fromisoformat(date_value)
 		final = date_object
-		start = date.today() - timedelta(days = 15)
+		start = date.today() - timedelta(days = 16)
 		print(start)
 		delta = final - start
 		delta_days = delta.days
@@ -343,7 +343,7 @@ def update_output2(date_value):
 	if date_value is not None:
 		date_object = date.fromisoformat(date_value)
 		final = date_object
-		start = date.today() - timedelta(days = 15)
+		start = date.today() - timedelta(days = 16)
 		print(start)
 		delta = final - start
 		delta_days = delta.days
