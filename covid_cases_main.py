@@ -15,6 +15,7 @@ import plotly.io as pio
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import scale
 from datetime import date, timedelta
+import math
 
 from covid_deaths import death_map
 from covid_deaths import timeline_deaths
@@ -54,7 +55,8 @@ fig2 = px.scatter(x = covid_us_scatter.index, y = covid_us_scatter.values)
 fig2.update_layout(xaxis_title = "Date", yaxis_title = "Cases (Cumulative)", title = "Timeline of Total COVID-19 Cases In The US")
 
 #vaccination data
-last_updated_vax = str(date.today())
+last_updated_vax = date.today()
+last_updated_vax = last_updated_vax.strftime('%B %d, %Y')
 
 vax = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv')
 vax = vax.loc[vax["location"] == "United States"]
@@ -72,24 +74,50 @@ fig_vax.update_layout(xaxis_title = "Date", yaxis_title = "vaccinations", title 
 
 #Today's stats
 original = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports_us/"
-try:
-	today = date.today() - timedelta(days = 1)
-	current_yr = str(today.year)
-	current_month = str(today.month)
-	current_day = str(today.day)
-	current_date = current_month + '-' + current_day + '-' + current_yr
-	build_string = original + current_month + '-' + current_day + '-' + current_yr + '.csv'
-	print(build_string)
-	today_stats = pd.read_csv(build_string)
+try:  
+    today = date.today() - timedelta(days = 1)
+
+    if today.year <= 9:
+        current_yr = '0' + str(today.year)
+    else:
+        current_yr = str(today.year)
+    
+    if today.month <= 9:
+        current_month = '0' + str(today.month)
+    else:
+        current_month = str(today.month)
+
+    if today.day <= 9:
+        current_day = '0' + str(today.day)
+    else:
+        current_day = str(today.day)
+
+    current_date = current_month + '-' + current_day + '-' + current_yr
+    build_string = original + current_month + '-' + current_day + '-' + current_yr + '.csv'
+    print(build_string)
+    today_stats = pd.read_csv(build_string)
 except:
-	today = date.today() - timedelta(days = 2)
-	current_yr = str(today.year)
-	current_month = str(today.month)
-	current_day = str(today.day)
-	current_date = current_month + '-' + current_day + '-' + current_yr
-	build_string = original + current_month + '-' + current_day + '-' + current_yr + '.csv'
-	print(build_string)
-	today_stats = pd.read_csv(build_string)
+    today = date.today() - timedelta(days = 2)
+
+    if today.year <= 9:
+        current_yr = '0' + str(today.year)
+    else:
+        current_yr = str(today.year)
+    
+    if today.month <= 9:
+        current_month = '0' + str(today.month)
+    else:
+        current_month = str(today.month)
+
+    if today.day <= 9:
+        current_day = '0' + str(today.day)
+    else:
+        current_day = str(today.day)
+        
+    current_date = current_month + '-' + current_day + '-' + current_yr
+    build_string = original + current_month + '-' + current_day + '-' + current_yr + '.csv'
+    print(build_string)
+    today_stats = pd.read_csv(build_string)
 
 '''Miscellaneous additions'''
 total_cases_today = covid_us_scatter.iloc[-1] #Insert commas every 3 digits
@@ -321,7 +349,7 @@ def update_output2(date_value):
 		delta_days = delta.days
 		y_pred = estimate_deaths_slope * delta_days + estimate_deaths_intercept
 		value = y_pred[0][0]
-		estimate_deaths = (int(value/1000) * 1000) #rounding the estimate
+		estimate_deaths = (math.ceil(value/1000) * 1000) #rounding the estimate
 		estimate_death_string = str('{:,}'.format(estimate_deaths))
 		estimate_death_string = "There will be approximately " + estimate_death_string + " estimated cases (rounded) on your selected date."
 		return estimate_death_string
