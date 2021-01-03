@@ -31,7 +31,7 @@ covid_deaths["FIPS"] = covid_deaths["FIPS"].apply(lambda x: f"{x:05.0f}") #Fixes
 last_column_deaths = covid_deaths.columns[-1]
 
 '''Regressions/Prediction/Projections'''
-month_before = covid_deaths.columns[-31]
+month_before = covid_deaths.columns[-16]
 covid_us_adjust = covid_deaths.loc[:,month_before:last_column_deaths].sum(axis = 0)
 covid_us_adjust_df = covid_us_adjust.to_frame()
 numbers = []

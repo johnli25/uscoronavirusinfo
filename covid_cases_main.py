@@ -129,7 +129,7 @@ for col in covid_df.columns: #Get last updated date
   last_updated = col
 
 '''Projections/Predictions/Regressions (Cases)'''
-month_before = covid_df.columns[-31]
+month_before = covid_df.columns[-16]
 covid_us_adjust = covid_df.loc[:,month_before:last_column].sum(axis = 0)
 covid_us_adjust_df = covid_us_adjust.to_frame()
 numbers = []
@@ -322,14 +322,14 @@ def update_output1(date_value):
 	if date_value is not None:
 		date_object = date.fromisoformat(date_value)
 		final = date_object
-		start = date.today() - timedelta(days = 30)
+		start = date.today() - timedelta(days = 15)
 		print(start)
 		delta = final - start
 		delta_days = delta.days
 		y_pred = slope * delta_days + intercept
 		value = y_pred[0][0]
 		print(str(value) + "cases") 
-		estimate_case = (int(value/10000) * 10000) #rounding the estimate
+		estimate_case = (math.ceil(value/10000) * 10000) #rounding the estimate
 		estimate_case_string = str('{:,}'.format(estimate_case))
 		estimate_case_string = "There will be approximately " + estimate_case_string + " estimated cases (rounded) on your selected date."
 		return estimate_case_string
@@ -343,7 +343,7 @@ def update_output2(date_value):
 	if date_value is not None:
 		date_object = date.fromisoformat(date_value)
 		final = date_object
-		start = date.today() - timedelta(days = 30)
+		start = date.today() - timedelta(days = 15)
 		print(start)
 		delta = final - start
 		delta_days = delta.days
