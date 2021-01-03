@@ -81,4 +81,3 @@ def death_prediction_intercept():
 def death_prediction_slope():
 	slope = model.coef_
 	return slope
-
