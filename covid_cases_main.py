@@ -54,7 +54,7 @@ covid_us_scatter = covid_df.loc[:,"1/22/20":last_column].sum(axis = 0)
 fig2 = px.scatter(x = covid_us_scatter.index, y = covid_us_scatter.values)
 fig2.update_layout(xaxis_title = "Date", yaxis_title = "Cases (Cumulative)", title = "Timeline of Total COVID-19 Cases In The US")
 
-#vaccination data
+'''vaccination data'''
 last_updated_vax = date.today()
 last_updated_vax = last_updated_vax.strftime('%B %d, %Y')
 
@@ -72,7 +72,7 @@ vax_series = pd.Series(vax["total_vaccinations"].values, index=vax['date'])
 fig_vax = px.scatter(x = vax_series.index, y = vax_series.values)
 fig_vax.update_layout(xaxis_title = "Date", yaxis_title = "vaccinations", title = "Total COVID-19 Vaccinations in the U.S")
 
-#Today's stats
+'''Today's stats'''
 original = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports_us/"
 try:  
     today = date.today() - timedelta(days = 1)
@@ -123,7 +123,7 @@ except:
 total_cases_today = covid_us_scatter.iloc[-1] #Insert commas every 3 digits
 total_cases_today_string = str('{:,}'.format(total_cases_today))
 
-total_deaths_today_string = today_deaths()
+total_deaths_today_string = today_deaths() #import from covid_deaths
 
 for col in covid_df.columns: #Get last updated date
   last_updated = col
@@ -140,7 +140,7 @@ for index, row in covid_us_adjust_df.iterrows():
 numbers
 covid_us_adjust_df["days_after_1"] = numbers #how many days after start date
 
-'''(deaths)'''
+#deaths portion
 y = covid_us_adjust_df.iloc[:, 0].values.reshape(-1, 1)
 x = covid_us_adjust_df.iloc[:, 1].values.reshape(-1, 1)
 model = LinearRegression()
@@ -156,7 +156,11 @@ slope = model.coef_
 fig_death = death_map()
 fig2_death = timeline_deaths()
 estimate_deaths_slope = death_prediction_slope()
-estimate_deaths_intercept = death_prediction_intercept() 
+estimate_deaths_intercept = death_prediction_intercept()
+
+'''Other visualizations'''
+
+
 
 
 '''Web Dashboard Design'''
@@ -295,7 +299,7 @@ app.layout = html.Div(dcc.Tabs([dcc.Tab(label="Cases",
 						'color': '#008080'}),
 			html.Br(),
 			dcc.Markdown('''
-			### _**Useful Links and Datasets**_
+			### _**Sourced (and Useful) Links and Datasets**_
 			* [NYTimes Coronavirus Tracker](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html)
 			* [John Hopkins University's CSSEGISandData COVID-19 Datasets](https://github.com/CSSEGISandData/COVID-19/)
 			'''),
