@@ -161,8 +161,6 @@ estimate_deaths_intercept = death_prediction_intercept()
 '''Other visualizations'''
 
 
-
-
 '''Web Dashboard Design'''
 app.layout = html.Div(dcc.Tabs([dcc.Tab(label="Cases", 
 	style={'font-family':"Verdana",
@@ -302,6 +300,8 @@ app.layout = html.Div(dcc.Tabs([dcc.Tab(label="Cases",
 			### _**Sourced (and Useful) Links and Datasets**_
 			* [NYTimes Coronavirus Tracker](https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html)
 			* [John Hopkins University's CSSEGISandData COVID-19 Datasets](https://github.com/CSSEGISandData/COVID-19/)
+			* [CDC COVID-19 page](https://covid.cdc.gov/covid-data-tracker/#cases_casesper100klast7days)
+			* [https://www.worldometers.info/coronavirus/country/us/](https://www.worldometers.info/coronavirus/country/us/)
 			'''),
 			html.Br(),
 			dcc.Markdown('''
